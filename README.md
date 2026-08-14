@@ -1,6 +1,5 @@
 # Interview Copilot for macOS
 
-# Interview Copilot for macOS
 
 A native macOS interview assistant built to help you during live interviews by listening to the conversation, detecting questions, and giving you fast AI-generated answer suggestions in real time.
 
