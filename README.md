@@ -1,20 +1,29 @@
 # Interview Copilot for macOS
 
+[![Download](https://img.shields.io/github/downloads/wenayy/Interview_Copilot/total?label=downloads&color=2ea44f)](../../releases/latest)
+[![Stars](https://img.shields.io/github/stars/wenayy/Interview_Copilot?style=social)](../../stargazers)
 
-A native macOS interview assistant built to help you during live interviews by listening to the conversation, detecting questions, and giving you fast AI-generated answer suggestions in real time.
-
-tools like JobGenie. It listens to your call, transcribes both sides in real time,
-and shows AI-suggested answers in an overlay that is **hidden from screen sharing
-and recordings**. Bring your own API keys; runs entirely on your machine.
+A native macOS interview assistant that helps you during live interviews by
+listening to the conversation, detecting questions, and giving you fast
+AI-generated answer suggestions in real time. It transcribes both sides of the
+call and shows the answers in an overlay that is **hidden from screen sharing and
+recordings**. Bring your own API keys; runs entirely on your machine.
 
 > **macOS only.** This is built on Apple-only frameworks (AppKit, ScreenCaptureKit,
 > Speech). It does **not** run on Windows or Linux.
+
+> ⭐ **If you find this useful, please [star the repo](../../)** — it helps other
+> people find it.
 
 ## ⬇️ Download
 
 **[➡️ Download the latest version (InterviewCopilot-macOS.zip)](../../releases/latest/download/InterviewCopilot-macOS.zip)**
 
 Then follow **[INSTALL.md](INSTALL.md)** (takes ~2 minutes). New to this? Start there.
+
+> 💡 **After you open it, there's no window and no Dock icon** — look for the
+> **waveform icon in your menu bar** (top-right of the screen). Click it to start,
+> open settings, and control everything.
 
 ---
 
