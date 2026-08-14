@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+ "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>InterviewCopilot</string>
+    <key>CFBundleDisplayName</key>
+    <string>Interview Copilot</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.local.interviewcopilot</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleExecutable</key>
+    <string>InterviewCopilot</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Interview Copilot listens to your microphone to transcribe your answers.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Interview Copilot transcribes speech on-device to suggest answers.</string>
+</dict>
+</plist>

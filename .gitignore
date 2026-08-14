@@ -1,0 +1,19 @@
+# Build output (never committed)
+.build/
+InterviewCopilot.app/
+dist/
+
+# SwiftPM / Xcode
+.swiftpm/
+Package.resolved
+*.xcodeproj
+*.xcworkspace
+
+# Editor / tooling
+.claude/
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
