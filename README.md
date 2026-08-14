@@ -14,6 +14,8 @@ recordings**. Bring your own API keys; runs entirely on your machine.
 
 > ⭐ **If you find this useful, please [star the repo](../../)** — it helps other
 > people find it.
+> 
+<img width="362" height="352" alt="image" src="https://github.com/user-attachments/assets/ae948f0c-d9d8-4242-a52f-f9be2d856f3f" />
 
 ## ⬇️ Download
 
@@ -73,6 +75,8 @@ Then follow **[INSTALL.md](INSTALL.md)** (takes ~2 minutes). New to this? Start 
    Security** and click **Open Anyway**.)*
 4. Launch it from **Spotlight** (⌘Space → "Interview Copilot") or Launchpad.
    A **waveform icon** appears in your menu bar.
+   <img width="366" height="358" alt="image" src="https://github.com/user-attachments/assets/9fc95539-51d8-4cd4-965a-c7fbb500489b" />
+
 
 ### Option B — Build from source (no quarantine issues)
 
