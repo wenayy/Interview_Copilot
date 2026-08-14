@@ -42,13 +42,15 @@ fi
 # Screen Recording / Microphone grants across rebuilds. Falls back to ad-hoc
 # (which re-prompts every build) if the cert isn't installed.
 IDENTITY="InterviewCopilot Dev"
+ENTITLEMENTS="InterviewCopilot.entitlements"
 if security find-identity 2>/dev/null | grep -q "$IDENTITY"; then
     echo "▶ Signing with '$IDENTITY' (stable identity)…"
-    codesign --force --deep --options runtime --sign "$IDENTITY" "$APP"
+    codesign --force --deep --options runtime \
+        --entitlements "$ENTITLEMENTS" --sign "$IDENTITY" "$APP"
 else
     echo "▶ Signing (ad-hoc — cert '$IDENTITY' not found; permissions will"
     echo "   reset each rebuild)…"
-    codesign --force --deep --sign - "$APP"
+    codesign --force --deep --entitlements "$ENTITLEMENTS" --sign - "$APP"
 fi
 
 echo "✅ Built $APP"

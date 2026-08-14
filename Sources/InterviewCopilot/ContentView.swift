@@ -57,33 +57,11 @@ struct ContentView: View {
                 }
             }
 
-            // Live transcript tail
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 4) {
-                        ForEach(Array(vm.transcript.suffix(6).enumerated()),
-                                id: \.offset) { _, seg in
-                            line(seg.speaker == .interviewer ? "Q" : "Me",
-                                 seg.text,
-                                 seg.speaker == .interviewer ? .cyan : .green)
-                        }
-                        if !vm.liveInterviewer.isEmpty {
-                            line("Q", vm.liveInterviewer + "…", .cyan.opacity(0.6))
-                        }
-                        if !vm.liveMe.isEmpty {
-                            line("Me", vm.liveMe + "…", .green.opacity(0.6))
-                        }
-                        Color.clear.frame(height: 1).id("bottom")
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .frame(height: 90)
-                .onChange(of: vm.transcript.count) { _, _ in
-                    withAnimation { proxy.scrollTo("bottom") }
-                }
+            // Live transcript tail — hidden in compact mode
+            if !vm.compactMode {
+                transcriptView
+                Divider().overlay(.white.opacity(0.15))
             }
-
-            Divider().overlay(.white.opacity(0.15))
 
             // Suggested answer
             ScrollView {
@@ -97,9 +75,12 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(maxHeight: .infinity)
+
+            Divider().overlay(.white.opacity(0.15))
+            askQuestionBar
         }
         .padding(12)
-        .frame(minWidth: 360, minHeight: 340)
+        .frame(minWidth: 360, minHeight: vm.compactMode ? 220 : 340)
         .background(Color.black.opacity(0.82))
         .foregroundStyle(.white)
     }
@@ -114,10 +95,22 @@ struct ContentView: View {
                 .foregroundStyle(.white.opacity(0.7))
                 .lineLimit(1)
             Spacer()
-            Text("\(vm.apiCalls)")
-                .font(.system(size: 10))
-                .foregroundStyle(.white.opacity(0.4))
-                .help("API answer-calls this session")
+            if vm.apiCalls > 0 {
+                Text("API: \(vm.apiCalls)")
+                    .font(.system(size: 9, weight: .bold, design: .monospaced))
+                    .foregroundStyle(.black)
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 2)
+                    .background(Color.white.opacity(0.6))
+                    .cornerRadius(4)
+            }
+            Button(vm.compactMode ? "Full" : "Mini") {
+                vm.compactMode.toggle()
+            }
+            .buttonStyle(.plain)
+            .font(.system(size: 10, weight: .semibold))
+            .foregroundStyle(.yellow)
+            .help("Toggle compact mode (⌃⌥C)")
             Button(showKeys ? "⌨︎✕" : "⌨︎") { showKeys.toggle() }
                 .buttonStyle(.plain)
                 .font(.system(size: 11))
@@ -172,6 +165,74 @@ struct ContentView: View {
                 .buttonStyle(.plain)
                 .font(.system(size: 11, weight: .semibold))
                 .foregroundStyle(.cyan)
+        }
+    }
+
+    private var transcriptView: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(Array(vm.transcript.suffix(6).enumerated()),
+                            id: \.offset) { _, seg in
+                        line(seg.speaker == .interviewer ? "Q" : "Me",
+                             seg.text,
+                             seg.speaker == .interviewer ? .cyan : .green)
+                    }
+                    if !vm.liveInterviewer.isEmpty {
+                        line("Q", vm.liveInterviewer + "…", .cyan.opacity(0.6))
+                    }
+                    if !vm.liveMe.isEmpty {
+                        line("Me", vm.liveMe + "…", .green.opacity(0.6))
+                    }
+                    Color.clear.frame(height: 1).id("bottom")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(height: 90)
+            .onChange(of: vm.transcript.count) { _, _ in
+                withAnimation { proxy.scrollTo("bottom") }
+            }
+        }
+    }
+
+    private var askQuestionBar: some View {
+        HStack(spacing: 6) {
+            Button { vm.askLast() } label: {
+                HStack(spacing: 3) {
+                    Image(systemName: "text.bubble.fill")
+                        .font(.system(size: 11))
+                    Text("Ask Last")
+                        .font(.system(size: 10, weight: .semibold))
+                }
+                .foregroundStyle(.purple)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 4)
+                .background(Color.purple.opacity(0.12))
+                .cornerRadius(5)
+            }
+            .buttonStyle(.plain)
+            .help("Ask AI about what you just said (⌃⌥Q)")
+
+            TextField("Type a question…", text: $vm.questionText)
+                .textFieldStyle(.plain)
+                .font(.system(size: 12))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 5)
+                .background(Color.white.opacity(0.08))
+                .cornerRadius(6)
+                .onSubmit { vm.askQuestion() }
+
+            Button { vm.askQuestion() } label: {
+                Image(systemName: "arrow.up.circle.fill")
+                    .font(.system(size: 16))
+                    .foregroundStyle(vm.questionText.trimmingCharacters(
+                        in: .whitespacesAndNewlines).isEmpty
+                        ? .white.opacity(0.25) : .cyan)
+            }
+            .buttonStyle(.plain)
+            .disabled(vm.questionText.trimmingCharacters(
+                in: .whitespacesAndNewlines).isEmpty)
+            .help("Send question (Enter)")
         }
     }
 
