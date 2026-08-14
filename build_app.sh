@@ -18,6 +18,26 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/InterviewCopilot"
 cp Info.plist "$APP/Contents/Info.plist"
 
+# App icon: if AppIcon.png (a square 1024x1024 PNG) exists at the repo root,
+# generate a proper multi-resolution AppIcon.icns and embed it.
+if [ -f "AppIcon.png" ]; then
+    echo "▶ Generating app icon from AppIcon.png …"
+    ICONSET="$(mktemp -d)/AppIcon.iconset"
+    mkdir -p "$ICONSET"
+    for size in 16 32 128 256 512; do
+        sips -z "$size" "$size" AppIcon.png \
+            --out "$ICONSET/icon_${size}x${size}.png" >/dev/null
+        double=$((size * 2))
+        sips -z "$double" "$double" AppIcon.png \
+            --out "$ICONSET/icon_${size}x${size}@2x.png" >/dev/null
+    done
+    iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
+    echo "   ✓ AppIcon.icns embedded"
+else
+    echo "▶ (No AppIcon.png found — using default icon. Drop a 1024x1024"
+    echo "   AppIcon.png at the repo root to set a custom icon.)"
+fi
+
 # Sign with a stable self-signed identity if available, so macOS keeps the
 # Screen Recording / Microphone grants across rebuilds. Falls back to ad-hoc
 # (which re-prompts every build) if the cert isn't installed.
