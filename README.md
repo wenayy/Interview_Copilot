@@ -8,6 +8,12 @@ and recordings**. Bring your own API keys; runs entirely on your machine.
 > **macOS only.** This is built on Apple-only frameworks (AppKit, ScreenCaptureKit,
 > Speech). It does **not** run on Windows or Linux.
 
+## ⬇️ Download
+
+**[➡️ Download the latest version (InterviewCopilot-macOS.zip)](../../releases/latest/download/InterviewCopilot-macOS.zip)**
+
+Then follow **[INSTALL.md](INSTALL.md)** (takes ~2 minutes). New to this? Start there.
+
 ---
 
 ## ✨ Features
@@ -44,8 +50,8 @@ and recordings**. Bring your own API keys; runs entirely on your machine.
 
 ### Option A — Download the app (easiest)
 
-1. Go to the [**Releases**](../../releases) page and download
-   `InterviewCopilot-macOS.zip`.
+1. Download **[InterviewCopilot-macOS.zip](../../releases/latest/download/InterviewCopilot-macOS.zip)**
+   (or pick it from the [Releases](../../releases) page).
 2. Unzip it and drag **InterviewCopilot.app** into your **Applications** folder.
 3. Because the app isn't from the App Store, macOS quarantines it. Remove the
    quarantine so it will open (one time). Open **Terminal** and run:

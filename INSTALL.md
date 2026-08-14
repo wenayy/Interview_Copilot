@@ -8,8 +8,8 @@ optional but gives much better transcription.
 
 ## 1. Download
 
-Grab **`InterviewCopilot-macOS.zip`** from the
-[**Releases**](../../releases) page, unzip it, and drag
+**[⬇️ Download InterviewCopilot-macOS.zip](../../releases/latest/download/InterviewCopilot-macOS.zip)**
+(or pick it from the [Releases](../../releases) page). Unzip it and drag
 **InterviewCopilot.app** into your **Applications** folder.
 
 ## 2. Remove the quarantine (one time)
