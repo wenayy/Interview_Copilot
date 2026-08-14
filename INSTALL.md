@@ -31,6 +31,8 @@ xattr -dr com.apple.quarantine /Applications/InterviewCopilot.app
 
 Open it from **Spotlight** (⌘Space → type "Interview Copilot") or Launchpad.
 A **waveform icon** appears in your **menu bar** (top-right). There's no Dock icon.
+<img width="366" height="358" alt="image" src="https://github.com/user-attachments/assets/1a1ac57d-0ed2-45dd-8872-102ffbe0826e" />
+
 
 ## 4. Grant permissions (first time you press Start)
 
