@@ -1,6 +1,9 @@
 # Interview Copilot for macOS
 
-A native **macOS** interview/meeting copilot — the Mac counterpart to Windows-only
+# Interview Copilot for macOS
+
+A native macOS interview assistant built to help you during live interviews by listening to the conversation, detecting questions, and giving you fast AI-generated answer suggestions in real time.
+
 tools like JobGenie. It listens to your call, transcribes both sides in real time,
 and shows AI-suggested answers in an overlay that is **hidden from screen sharing
 and recordings**. Bring your own API keys; runs entirely on your machine.
