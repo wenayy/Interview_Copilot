@@ -36,6 +36,10 @@ final class CopilotViewModel: ObservableObject {
     @Published var audioHeard = false
     /// Mirror of settings.transcribeMic, editable live from the overlay.
     @Published var micEnabled = true
+    /// Compact overlay mode — hides transcript, shows only answer + ask bar.
+    @Published var compactMode = false
+    /// Text typed into the "Ask a question" bar.
+    @Published var questionText = ""
     /// When off, the résumé/background is NOT sent — answers won't reference it.
     @Published var useResume: Bool =
         (UserDefaults.standard.object(forKey: "useResume") as? Bool) ?? true {
@@ -331,6 +335,62 @@ final class CopilotViewModel: ObservableObject {
             return PDFDocument(url: url)?.string
         }
         return try? String(contentsOf: url, encoding: .utf8)
+    }
+
+    // MARK: - Ask a question
+
+    /// Send a typed question to the AI.
+    func askQuestion() {
+        let q = questionText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !q.isEmpty else { return }
+        questionText = ""
+        askDirect(question: q)
+    }
+
+    /// Grab your last spoken "Me:" lines and send as a question.
+    func askLast() {
+        var parts: [String] = []
+        for seg in transcript.reversed() {
+            if seg.speaker == .me {
+                parts.insert(seg.text, at: 0)
+                if parts.count >= 3 { break }
+            } else {
+                if !parts.isEmpty { break }
+            }
+        }
+        let live = liveMe.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !live.isEmpty { parts.append(live) }
+
+        let q = parts.joined(separator: " ")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !q.isEmpty else {
+            suggestion = "Nothing captured from your mic yet. " +
+                "Make sure Mic is on and say your question, then tap Ask Last."
+            return
+        }
+        askDirect(question: q)
+    }
+
+    private func askDirect(question: String) {
+        suggestionTask?.cancel()
+        suggestion = ""
+        apiCalls += 1
+        suggestionTask = Task { [weak self] in
+            guard let self else { return }
+            let snapshot = Array(self.transcript.suffix(self.transcriptWindow))
+            let ctx = self.combinedContext()
+            let style = self.answerStyle
+            do {
+                for try await delta in self.provider.streamSuggestion(
+                    transcript: snapshot + [.init(speaker: .interviewer, text: question)],
+                    jobContext: ctx, screenshot: nil, style: style) {
+                    if Task.isCancelled { return }
+                    self.suggestion += delta
+                }
+            } catch {
+                self.suggestion = "⚠️ \(error.localizedDescription)"
+            }
+        }
     }
 
     private func runningStatus() -> String {

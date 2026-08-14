@@ -11,7 +11,7 @@ import SwiftUI
 final class OverlayPanel: NSPanel {
     init(rootView: NSView) {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 380, height: 420),
+            contentRect: NSRect(x: 0, y: 0, width: 380, height: 470),
             styleMask: [.titled, .closable, .resizable,
                         .fullSizeContentView, .nonactivatingPanel],
             backing: .buffered,
@@ -176,6 +176,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
         hk.register(keyCode: Shortcuts.resume.keyCode) { [weak self] in
             self?.vm.useResume.toggle()
+        }
+        hk.register(keyCode: Shortcuts.askLast.keyCode) { [weak self] in
+            self?.vm.askLast()
+        }
+        hk.register(keyCode: Shortcuts.compact.keyCode) { [weak self] in
+            self?.vm.compactMode.toggle()
         }
     }
 

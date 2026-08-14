@@ -14,7 +14,7 @@ recordings**. Bring your own API keys; runs entirely on your machine.
 
 > ⭐ **If you find this useful, please [star the repo](../../)** — it helps other
 > people find it.
-> 
+>
 <img width="362" height="352" alt="image" src="https://github.com/user-attachments/assets/ae948f0c-d9d8-4242-a52f-f9be2d856f3f" />
 
 ## ⬇️ Download
@@ -38,6 +38,10 @@ Then follow **[INSTALL.md](INSTALL.md)** (takes ~2 minutes). New to this? Start 
 - **Answer styles**: Concise · Detailed · STAR (behavioral) · Code (with complexity).
 - **Screen answers** — capture your screen and answer what's *shown* (coding
   problems, multiple-choice, shared docs) using a vision model.
+- **Ask a question** — type any question in the ask bar and get an instant AI
+  answer, or use **Ask Last** to ask the AI about what you just said out loud.
+- **Compact mode** — toggle Mini/Full to shrink the overlay during the interview,
+  showing only the answer and ask bar.
 - **Personalization** — paste or load your résumé (PDF/txt); a toggle controls
   whether answers use it, so it's never forced in.
 - **Hidden from screen share** — the overlay and settings are excluded from
@@ -135,6 +139,23 @@ takes effect.
    - **Auto** off → press **⌃⌥A** (or click **Answer**) when you want one.
 4. For an on-screen question (coding/MCQ), press **⌃⌥S** (or **Screen**).
 
+### Ask a question
+
+At the bottom of the overlay there's an **ask bar** — two ways to use it:
+
+- **Type a question** → enter any question in the text field and press Enter.
+  The AI answers it using the current interview context. Completely silent —
+  the interviewer can't hear you typing.
+- **Ask Last** → say something out loud (with **Mic** on, while muted on the
+  call), then tap **Ask Last** or press **⌃⌥Q**. It grabs the last thing you
+  said from the transcript and sends it to the AI.
+
+### Compact mode
+
+Click **Mini** in the header (or press **⌃⌥C**) to hide the transcript and
+shrink the overlay to just the answer + ask bar. Click **Full** to restore.
+Great for keeping the overlay small and out of the way during a live interview.
+
 ### Keyboard shortcuts
 
 | Key | Action |
@@ -144,6 +165,8 @@ takes effect.
 | **⌃⌥H** | Show / hide the overlay |
 | **⌃⌥M** | Toggle mic listening |
 | **⌃⌥R** | Toggle whether answers use your résumé |
+| **⌃⌥Q** | Ask Last — ask AI about what you just said |
+| **⌃⌥C** | Toggle compact / full mode |
 
 These work even when your browser/Meet is focused. The **⌨︎** button in the
 overlay shows this list any time.
@@ -166,7 +189,7 @@ You pay your API providers directly — there's no markup. It's cheap:
 
 Ways to keep it minimal: turn **Auto off** (answer only when you ask), turn
 **Mic off** (halves Deepgram), use **Screen** only when the question is on screen,
-and use a cheap model. The overlay shows a live **call counter**.
+and use a cheap model. The overlay shows a live **API call counter**.
 
 ---
 
@@ -209,6 +232,8 @@ proctored environments.
   automatically but make sure it's complete.
 - **Shortcuts don't fire** → another app may use the same combo; open an issue and
   we'll add remapping.
+- **Overlay disappeared** → press **⌃⌥H** to bring it back, or click the waveform
+  icon in the menu bar → **Show overlay**.
 
 ---
 
@@ -219,8 +244,8 @@ Open source and PRs welcome. Structure:
 ```
 Sources/InterviewCopilot/
   main.swift            menu bar + overlay panel (sharingType = .none) + hotkeys
-  ContentView.swift     overlay UI
-  CopilotViewModel.swift orchestration (audio → transcribe → answer)
+  ContentView.swift     overlay UI (ask bar, compact mode, transcript, answer)
+  CopilotViewModel.swift orchestration (audio → transcribe → answer → ask question)
   AudioCapture.swift    ScreenCaptureKit system audio + mic
   Transcriber.swift     Apple SFSpeechRecognizer engine
   DeepgramEngine.swift  Deepgram streaming engine
