@@ -81,7 +81,7 @@ struct ContentView: View {
         }
         .padding(12)
         .frame(minWidth: 360, minHeight: vm.compactMode ? 220 : 340)
-        .background(Color.black.opacity(0.82))
+        .background(Color.black.opacity(vm.overlayOpacity))
         .foregroundStyle(.white)
     }
 
@@ -111,6 +111,9 @@ struct ContentView: View {
             .font(.system(size: 10, weight: .semibold))
             .foregroundStyle(.yellow)
             .help("Toggle compact mode (⌃⌥C)")
+            Slider(value: $vm.overlayOpacity, in: 0.15...1.0, step: 0.05)
+                .frame(width: 50)
+                .help("Overlay opacity — slide left to see through")
             Button(showKeys ? "⌨︎✕" : "⌨︎") { showKeys.toggle() }
                 .buttonStyle(.plain)
                 .font(.system(size: 11))

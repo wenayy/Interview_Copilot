@@ -38,6 +38,11 @@ final class CopilotViewModel: ObservableObject {
     @Published var micEnabled = true
     /// Compact overlay mode — hides transcript, shows only answer + ask bar.
     @Published var compactMode = false
+    /// Overlay opacity (0.15 = very transparent, 1.0 = fully opaque).
+    @Published var overlayOpacity: Double =
+        UserDefaults.standard.object(forKey: "overlayOpacity") as? Double ?? 0.82 {
+        didSet { UserDefaults.standard.set(overlayOpacity, forKey: "overlayOpacity") }
+    }
     /// Text typed into the "Ask a question" bar.
     @Published var questionText = ""
     /// When off, the résumé/background is NOT sent — answers won't reference it.
